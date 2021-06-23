@@ -2,13 +2,13 @@ const router = require('express').Router()
 const asyncWrapper = require('../utilities/async-wrapper').AsyncWrapper
 const PlansService = require('../services/plans-service') 
 const validator = require('../middlerware/validator')
-const Plan = require('../models/plan')
+const Plan = require('../models/plan').ValidationSchema
 
 const plansService = new PlansService()
 
 // GET api/plans
 router.get('/', asyncWrapper(async (req, res) => {
-  const userId = null
+  const userId = 1
   const plans = await plansService.findAll(userId)
   res.send(plans)
 }))

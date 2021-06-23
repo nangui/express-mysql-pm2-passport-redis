@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   return Plan;
 };
 
-module.exports = Joi.object().keys({
+module.exports.ValidationSchema = Joi.object().keys({
   name: Joi.string().required(),
   price: Joi.number().positive().allow(0).required(),
   userId: Joi.number().positive().required(),

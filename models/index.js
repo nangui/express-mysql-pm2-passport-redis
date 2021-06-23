@@ -4,7 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const { DataTypes, Sequelize } = require('sequelize');
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config');
 const db = {};
 
@@ -12,6 +11,15 @@ let sequelize = new Sequelize(config.database, config.username, config.password,
   host: config.host,
   dialect: config.dialect
 })
+
+    sequelize.authenticate()
+      .then(function () {
+        console.log('Connection has been established successfully.');
+      })
+      .catch(function (error) {
+        console.error('Unable to connect to the database:', error);
+      })
+
 
 fs
   .readdirSync(__dirname)

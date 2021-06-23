@@ -1,12 +1,14 @@
 const router = require('express').Router()
 const asyncWrapper = require('../utilities/async-wrapper').AsyncWrapper
-const SubscriptionsController = require('../services/subscriptions-service') 
+const SubscriptionsService = require('../services/subscriptions-service')
+const validator = require('../middlerware/validator')
+const Subscription = require('../models/subscription').ValidationSchema
 
-const subscriptionsService = new SubscriptionsController()
+const subscriptionsService = new SubscriptionsService()
 
 // GET api/subscriptions
 router.get('/', asyncWrapper(async(req, res) => {
-  const userId = null
+  const userId = 1
   const subscriptions = await subscriptionsService.findAll(userId)
   res.send(subscriptions)
 }))
@@ -20,7 +22,7 @@ router.get('/:id', asyncWrapper(async(req, res) => {
 }))
 
 // POST api/subscriptions
-router.post('/', asyncWrapper(async(req, res) => {
+router.post('/', [ validator(Subscription) ], asyncWrapper(async(req, res) => {
   const subscription = await subscriptionsService.create(req.body)
   res.send(subscription)
 }))

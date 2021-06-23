@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     cardNumber: DataTypes.STRING,
     holderName: DataTypes.STRING,
     expirationDate: DataTypes.STRING,
-    cvv: DataTypes.STRING
+    cvv: DataTypes.STRING,
+    userId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Subscription',
@@ -30,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
   return Subscription;
 };
 
-module.exports = Joi.object().keys({
+module.exports.ValidationSchema = Joi.object().keys({
   planId: Joi.number().positive().required(),
   coupon: Joi.number().min(0).max(100).optional().allow(null),
   cardNumber: Joi.string().creditCard().required(),
